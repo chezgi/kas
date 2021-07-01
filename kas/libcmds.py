@@ -57,7 +57,7 @@ class Macro:
                 InitSetupRepos(),
                 repo_loop,
                 FinishSetupRepos(),
-                SetupHome(),
+                # SetupHome(),
                 ReposApplyPatches(),
                 SetupEnviron(),
                 WriteBBConfig(),

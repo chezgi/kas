@@ -2,7 +2,6 @@
 
 FROM debian:buster-slim
 
-ARG TARGETPLATFORM
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
@@ -19,9 +18,7 @@ RUN apt-get install --no-install-recommends -y \
         gosu lsb-release file vim less procps tree tar bzip2 zstd bc tmux libncurses-dev \
         dosfstools mtools parted \
         git-lfs mercurial iproute2 ssh-client curl rsync gnupg awscli sudo && \
-    if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
-        apt-get install --no-install-recommends -y gcc-multilib syslinux; \
-    fi && \
+        apt-get install --no-install-recommends -y gcc-multilib syslinux && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -32,6 +29,9 @@ ENV GIT_PROXY_COMMAND="oe-git-proxy" \
 
 COPY . /kas
 RUN pip3 --proxy=$https_proxy install --no-deps /kas && kas --help
+
+RUN groupadd -o --gid 1000 builder
+RUN useradd -o --uid 1000 --gid 1000 --create-home --home-dir /builder builder
 
 RUN echo "builder ALL=NOPASSWD: ALL" > /etc/sudoers.d/builder-nopasswd && \
     chmod 660 /etc/sudoers.d/builder-nopasswd
