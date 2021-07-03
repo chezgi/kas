@@ -1,4 +1,4 @@
-DNAME=http://server:5000/kas
+DNAME=server:5000/kas
 docker-build:
 	@docker build . -t ${DNAME}
 
