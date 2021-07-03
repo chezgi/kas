@@ -27,9 +27,6 @@ RUN wget -nv -O /usr/bin/oe-git-proxy "http://git.yoctoproject.org/cgit/cgit.cgi
 ENV GIT_PROXY_COMMAND="oe-git-proxy" \
     NO_PROXY="*"
 
-COPY . /kas
-RUN pip3 --proxy=$https_proxy install --no-deps /kas && kas --help
-
 RUN groupadd -o --gid 1000 builder
 RUN useradd -o --uid 1000 --gid 1000 --create-home --home-dir /builder builder
 
@@ -38,5 +35,9 @@ RUN echo "builder ALL=NOPASSWD: ALL" > /etc/sudoers.d/builder-nopasswd && \
 
 RUN echo "Defaults env_keep += \"ftp_proxy http_proxy https_proxy no_proxy\"" \
     > /etc/sudoers.d/env_keep && chmod 660 /etc/sudoers.d/env_keep
+
+COPY . /kas
+RUN pip3 --proxy=$https_proxy install --no-deps /kas 
+
 
 ENTRYPOINT ["/kas/container-entrypoint"]

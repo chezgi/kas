@@ -85,7 +85,8 @@ class Context:
             Sets the environment variables for processes that are
             started by kas.
         """
-        self.environ = {}
+        self.environ = os.environ
+        return
         distro_bases = get_distro_id_base().lower().split()
         for distro_base in distro_bases:
             if distro_base in ['fedora', 'suse', 'opensuse']:
