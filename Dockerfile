@@ -39,5 +39,5 @@ RUN echo "Defaults env_keep += \"ftp_proxy http_proxy https_proxy no_proxy\"" \
 COPY . /kas
 RUN pip3 --proxy=$https_proxy install --no-deps /kas 
 
-
+WORKDIR /WorkingDir/kas
 ENTRYPOINT ["/kas/container-entrypoint"]
