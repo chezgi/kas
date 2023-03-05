@@ -1,6 +1,6 @@
 # This image builds Yocto jobs using the kas tool
 
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -16,9 +16,9 @@ RUN apt-get install --no-install-recommends -y \
         pylint3 xterm \
         python3-setuptools python3-wheel python3-yaml python3-distro python3-jsonschema \
         gosu lsb-release file vim less procps tree tar bzip2 zstd bc tmux libncurses-dev \
-        dosfstools mtools parted \
+        python3-newt pigz lz4 bash-completion liblz4-tool python3-subunit mesa-common-dev \
+        dosfstools mtools parted gcc-multilib syslinux g++-multilib \
         git-lfs mercurial iproute2 ssh-client curl rsync gnupg awscli sudo && \
-        apt-get install --no-install-recommends -y gcc-multilib syslinux && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
