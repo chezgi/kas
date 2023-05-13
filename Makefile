@@ -1,4 +1,4 @@
-DNAME=server:5000/kas
+DNAME=reg.am.net/soodar/index/kas:3
 build:
 	@docker build . -t ${DNAME}
 	@docker push ${DNAME}

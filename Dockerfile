@@ -39,5 +39,12 @@ RUN echo "Defaults env_keep += \"ftp_proxy http_proxy https_proxy no_proxy\"" \
 COPY . /kas
 RUN pip3 --proxy=$https_proxy install --no-deps /kas 
 
+# install libthemis
+RUN wget -qO - https://pkgs-ce.cossacklabs.com/gpg | apt-key add -
+RUN echo "deb https://pkgs-ce.cossacklabs.com/stable/debian bullseye main" | \
+    tee /etc/apt/sources.list.d/cossacklabs.list
+RUN apt update && \
+    apt install -y libthemis-dev
+
 WORKDIR /WorkingDir/kas
 ENTRYPOINT ["/kas/container-entrypoint"]
